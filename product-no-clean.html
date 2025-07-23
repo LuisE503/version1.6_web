@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HP Spectre x360 14 Seminueva | Laptop Premium Certificada | Computecpart</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- jsPDF and html2canvas for PDF generation (still included, but not used for quote) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* Definición de variables CSS para la paleta de colores */
+        :root {
+            --color-dark-blue: #133C55;
+            --color-medium-blue: #3B6FA4;
+            --color-light-blue: #59A5D8;
+            --color-very-light-blue: #84D2F6;
+            --color-lightest-blue: #91E5F6;
+            --color-whatsapp-green: #25D366;
+            --color-whatsapp-green-hover: #1DA851;
+            --color-accent-text: #FFFFFF; /* Blanco para texto en fondo oscuro */
+        }
+
+        /* Estilos base y fuentes */
+        body {
+            /* Se asume que 'Arborea' se importa externamente si es necesario, de lo contrario, Inter es el fallback. */
+            font-family: 'Arborea', 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Mantener un fondo claro general */
+            color: var(--color-dark-blue);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Estilos para el botón principal de acción */
+        .main-action-button {
+            background-color: var(--color-whatsapp-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 700;
+            font-size: 1.25rem; /* text-xl */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .main-action-button:hover {
+            background-color: var(--color-whatsapp-green-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Estilos para el botón de cotización (ya no se usa, pero se mantiene por si acaso) */
+        .quote-button {
+            background-color: var(--color-light-blue); /* Un azul de tu paleta */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            margin-top: 1rem; /* Espacio entre los botones */
+        }
+
+        .quote-button:hover {
+            background-color: var(--color-medium-blue); /* Un azul más oscuro al hover */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Estilos para las tablas de especificaciones */
+        .specs-table th, .specs-table td {
+            padding: 0.85rem 1.25rem; /* Más padding */
+            border-bottom: 1px solid var(--color-very-light-blue);
+            text-align: left;
+        }
+        .specs-table th {
+            background-color: var(--color-lightest-blue);
+            color: var(--color-dark-blue);
+            font-weight: 700; /* Más negrita */
+        }
+        .specs-table tr:nth-child(even) { /* Filas alternas */
+            background-color: rgba(145, 229, 246, 0.1); /* Ligero azul para filas pares */
+        }
+        .specs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Estilos para pros y contras */
+        .pros-list li, .cons-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem; /* Más espacio */
+            color: var(--color-dark-blue);
+            line-height: 1.5;
+        }
+        .pros-list i {
+            color: var(--color-whatsapp-green); /* Verde para Pros */
+            margin-right: 0.75rem;
+            font-size: 1.5rem; /* Iconos más grandes */
+            flex-shrink: 0;
+        }
+        .cons-list i {
+            color: #ef4444; /* Rojo para Contras (Tailwind red-500) */
+            margin-right: 0.75rem;
+            font-size: 1.5rem; /* Iconos más grandes */
+            flex-shrink: 0;
+        }
+
+        /* Media queries para ajustar el layout en pantallas grandes */
+        @media (min-width: 1024px) { /* Large screens (lg) */
+            .product-grid-desktop {
+                grid-template-columns: 1fr 1.5fr 1fr; /* Columna de imagen, columna de detalles, columna de info importante */
+            }
+        }
+
+        /* Estilos para el zoom de imagen */
+        .image-zoom-container {
+            position: relative;
+            overflow: hidden; /* Oculta el exceso de la imagen magnificada */
+            cursor: crosshair;
+        }
+
+        .image-zoom-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 0.1s ease-out; /* Transición suave para el movimiento del zoom */
+        }
+
+        .image-zoom-container .zoom-lens {
+            position: absolute;
+            border: 2px solid var(--color-medium-blue);
+            background-color: rgba(255, 255, 255, 0.3);
+            pointer-events: none; /* Permite que los eventos del ratón pasen a la imagen subyacente */
+            width: 100px; /* Tamaño del "lente" de zoom */
+            height: 100px;
+            border-radius: 50%; /* Opcional: lente circular */
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+            transform: translate(-50%, -50%); /* Centra el lente en el cursor */
+        }
+
+        .image-zoom-container:hover .zoom-lens {
+            opacity: 1;
+        }
+
+        .image-zoom-container .zoomed-image-display {
+            position: absolute;
+            top: 0;
+            left: 105%; /* Posiciona la imagen magnificada a la derecha de la original */
+            width: 400px; /* Ancho de la ventana de zoom */
+            height: 400px; /* Alto de la ventana de zoom */
+            border: 1px solid var(--color-light-blue);
+            background-repeat: no-repeat;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 10;
+            display: none; /* Oculto por defecto */
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        @media (max-width: 1023px) { /* En pantallas pequeñas, oculta la ventana de zoom */
+            .image-zoom-container .zoomed-image-display {
+                display: none !important;
+            }
+        }
+
+        /* Estilos para el slider de Información Clave */
+        .info-slider-container {
+            height: 400px; /* Altura fija para el slider, similar a la imagen principal */
+            overflow: hidden;
+            position: relative;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--color-light-blue);
+        }
+
+        .info-slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .info-slider-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white; /* Fondo blanco para cada slide */
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .info-slider-slide .icon-wrapper {
+            background-color: var(--color-lightest-blue);
+            border-radius: 50%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info-slider-slide i {
+            color: var(--color-dark-blue);
+            font-size: 2.25rem; /* Iconos más grandes para el slider */
+        }
+        .info-slider-slide h3 {
+            font-size: 1.5rem; /* Título más grande */
+            font-weight: 700;
+            color: var(--color-dark-blue);
+            margin-bottom: 0.5rem;
+        }
+        .info-slider-slide p {
+            font-size: 1rem;
+            color: var(--color-medium-blue);
+            line-height: 1.4;
+        }
+
+        /* Estilos para el modal de cotización (ya no se usa, pero se mantiene por si acaso) */
+        .quote-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .quote-modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .quote-modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 450px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+        }
+
+        .quote-modal-overlay.visible .quote-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .quote-modal-content input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-very-light-blue);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: var(--color-dark-blue);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .quote-modal-content input:focus {
+            border-color: var(--color-light-blue);
+            box-shadow: 0 0 0 2px rgba(89, 165, 216, 0.3); /* focus-ring-color */
+        }
+
+        .quote-modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .quote-modal-buttons button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .quote-modal-buttons .cancel-button {
+            background-color: #e0e0e0;
+            color: var(--color-dark-blue);
+        }
+
+        .quote-modal-buttons .cancel-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .quote-modal-buttons .confirm-button {
+            background-color: var(--color-whatsapp-green);
+            color: white;
+        }
+
+        .quote-modal-buttons .confirm-button:hover {
+            background-color: var(--color-whatsapp-green-hover);
+        }
+
+        /* Loading indicator (ya no se usa, pero se mantiene por si acaso) */
+        .loading-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            font-size: 1.5rem;
+            color: var(--color-dark-blue);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .loading-indicator.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <!--
+        NOTA: Este código se centra en la plantilla del producto.
+        Deberás integrar este 'main' dentro de tu HTML existente,
+        asegurándote de que el 'header-container' y los scripts de tu header
+        estén presentes y funcionando correctamente.
+    -->
+
+    <main id="main-content-pusher" class="container mx-auto px-4 py-8 md:py-12 mt-24"> <!-- mt-24 para dejar espacio al header fijo -->
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 lg:p-10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 product-grid-desktop">
+                <!-- Columna 1: Imágenes del Producto con Zoom -->
+                <div class="flex flex-col items-center">
+                    <!-- Imagen Principal con Contenedor de Zoom -->
+                    <div class="w-full max-w-lg mb-6 rounded-lg overflow-hidden border border-gray-200 shadow-md image-zoom-container">
+                        <img id="main-product-image" src="https://placehold.co/800x600/59A5D8/ffffff?text=Laptop+Principal" alt="Laptop HP Spectre x360 14" class="w-full h-auto object-cover">
+                        <div class="zoom-lens"></div>
+                        <div class="zoomed-image-display"></div>
+                    </div>
+                    <!-- Miniaturas de Imágenes -->
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <img src="https://placehold.co/120x90/59A5D8/ffffff?text=Laptop+1" alt="Vista frontal de la laptop" class="thumbnail w-24 h-auto rounded-md cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all duration-200" onclick="changeMainImage(this.src)">
+                        <img src="https://placehold.co/120x90/3B6FA4/ffffff?text=Laptop+2" alt="Vista lateral de la laptop" class="thumbnail w-24 h-auto rounded-md cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all duration-200" onclick="changeMainImage(this.src)">
+                        <img src="https://placehold.co/120x90/133C55/ffffff?text=Laptop+3" alt="Teclado de la laptop" class="thumbnail w-24 h-auto rounded-md cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all duration-200" onclick="changeMainImage(this.src)">
+                        <img src="https://placehold.co/120x90/84D2F6/ffffff?text=Laptop+4" alt="Puertos de la laptop" class="thumbnail w-24 h-auto rounded-md cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all duration-200" onclick="changeMainImage(this.src)">
+                    </div>
+                </div>
+
+                <!-- Columna 2: Detalles del Producto (Título, Marca, Etiquetas, Precio, Botón) -->
+                <div class="lg:col-span-1">
+                    <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight" style="color: var(--color-dark-blue);" id="product-title">
+                        Laptop HP Spectre x360 14 Seminueva
+                    </h1>
+                    <p class="text-lg font-semibold mb-2" style="color: var(--color-medium-blue);">Marca: <span class="font-normal" id="product-brand">HP</span></p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full" style="background-color: var(--color-lightest-blue); color: var(--color-dark-blue);">Seminuevo Certificado</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full" style="background-color: var(--color-whatsapp-green); color: white;">Disponibilidad Inmediata</span>
+                        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full" style="background-color: #e0b0ff; color: #5a008c;">Garantía Extendida</span>
+                    </div>
+                    <p class="text-2xl md:text-3xl font-bold mb-6" style="color: var(--color-medium-blue);">
+                        <span class="text-gray-500 line-through mr-2 text-xl" id="original-price">$1,299.00 USD</span>
+                        <span id="offer-price">$999.00 USD</span>
+                    </p>
+
+                    <!-- Botón de Acción Principal -->
+                    <a href="https://wa.me/50378901234?text=Hola!%20Me%20interesa%20la%20Laptop%20HP%20Spectre%20x360%2014%20publicada%20en%20su%20web." target="_blank" rel="noopener noreferrer" class="main-action-button w-full">
+                        <i class="fab fa-whatsapp text-3xl"></i>
+                        <span>Pregunta o finaliza tu compra con un ejecutivo</span>
+                    </a>
+                    
+                    <!-- Sección de Políticas Estáticas (reemplaza el botón de cotización) -->
+                    <section class="mt-8 p-4 rounded-lg border border-gray-200 shadow-sm" style="background-color: #fcfcfc;">
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--color-dark-blue);">Nuestras Políticas Clave</h3>
+                        <ul class="text-gray-700 text-sm space-y-2">
+                            <li><i class="fas fa-info-circle mr-2" style="color: var(--color-medium-blue);"></i><strong>Precios:</strong> Sujetos a cambios sin previo aviso. Confirma con un ejecutivo.</li>
+                            <li><i class="fas fa-truck mr-2" style="color: var(--color-medium-blue);"></i><strong>Envíos:</strong> Disponibles a todo el país con costo adicional.</li>
+                            <li><i class="fas fa-shield-alt mr-2" style="color: var(--color-medium-blue);"></i><strong>Garantía:</strong> Todos nuestros equipos seminuevos incluyen garantía de Computecpart.</li>
+                            <li><i class="fas fa-box-open mr-2" style="color: var(--color-medium-blue);"></i><strong>Disponibilidad:</strong> Los equipos seminuevos tienen stock limitado.</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <!-- Columna 3: Slider de Información Clave -->
+                <div class="info-slider-container">
+                    <div class="info-slider-wrapper" id="info-slider-wrapper">
+                        <!-- Slide 1: Precios Flexibles -->
+                        <div class="info-slider-slide">
+                            <div class="icon-wrapper">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <h3>Precios Flexibles</h3>
+                            <p>Nuestros precios se ajustan a tu presupuesto. Contáctanos para una cotización actualizada y personalizada, ¡siempre buscando la mejor oferta para ti!</p>
+                        </div>
+                        <!-- Slide 2: Envíos a Todo el País -->
+                        <div class="info-slider-slide">
+                            <div class="icon-wrapper">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <h3>Envíos a Todo el País</h3>
+                            <p>Llevamos la tecnología a tu puerta. Consulta la disponibilidad de entrega en tu zona y los costos adicionales para que recibas tu equipo cómodamente.</p>
+                        </div>
+                        <!-- Slide 3: Garantía y Confianza -->
+                        <div class="icon-wrapper">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3>Garantía y Confianza</h3>
+                            <p>Compra con tranquilidad. Todos nuestros equipos seminuevos incluyen una sólida garantía de Computecpart, respaldando tu inversión.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Descripción General Mejorada -->
+            <section class="mt-12 p-6 rounded-xl shadow-md border border-gray-100" style="background-color: #fcfcfc;">
+                <h2 class="text-3xl font-bold mb-5 border-b pb-3" style="color: var(--color-dark-blue); border-color: var(--color-very-light-blue);">Descripción Detallada del Producto</h2>
+                <div class="text-gray-700 leading-relaxed text-lg space-y-4">
+                    <p>
+                        Sumérgete en la experiencia premium de la **Laptop HP Spectre x360 14 Seminueva**, un equipo 2 en 1 que redefine la versatilidad y el rendimiento. Este modelo, cuidadosamente seleccionado y reacondicionado por nuestros expertos, ofrece la elegancia y potencia de un equipo de alta gama a un valor inigualable. Ideal para profesionales, creativos y estudiantes que buscan una herramienta fiable y sofisticada.
+                    </p>
+                    <p>
+                        Su impresionante pantalla táctil OLED con resolución 3K2K (3000x2000) te brindará colores vibrantes y negros puros, perfecta para diseño gráfico, edición de video o simplemente disfrutar de tus contenidos multimedia favoritos. La bisagra de 360 grados te permite transformarla en laptop, tablet, tienda o soporte, adaptándose a cada una de tus necesidades.
+                    </p>
+                    <p>
+                        En Computecpart, cada equipo seminuevo pasa por un riguroso proceso de inspección, limpieza y pruebas de rendimiento para asegurar su óptimo funcionamiento. Adquirir un equipo seminuevo no solo es una decisión inteligente para tu bolsillo, sino también un paso hacia un consumo más sostenible.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sección de Especificaciones Técnicas Mejorada -->
+            <section class="mt-12">
+                <h2 class="text-3xl font-bold mb-6 text-center lg:text-left border-b pb-3" style="color: var(--color-dark-blue); border-color: var(--color-very-light-blue);">Especificaciones Técnicas Completas</h2>
+                <div class="overflow-x-auto rounded-lg shadow-md border border-gray-200">
+                    <table class="min-w-full bg-white specs-table" id="specs-table">
+                        <thead>
+                            <tr>
+                                <th class="py-3 px-4 text-left text-sm uppercase font-semibold">Característica</th>
+                                <th class="py-3 px-4 text-left text-sm uppercase font-semibold">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="font-medium">Procesador</td>
+                                <td>Intel Core i7-1165G7 (11ª Gen) @ 2.80 GHz (hasta 4.70 GHz con Turbo Boost)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Memoria RAM</td>
+                                <td>16 GB LPDDR4x-4266 MHz (integrada)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Almacenamiento</td>
+                                <td>512 GB PCIe NVMe M.2 SSD</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Pantalla</td>
+                                <td>13.5" OLED multitáctil (3000 x 2000), 400 nits, 100% DCI-P3</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Tarjeta Gráfica</td>
+                                <td>Intel Iris Xe Graphics</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Sistema Operativo</td>
+                                <td>Windows 11 Home (64-bit)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Puertos</td>
+                                <td>2x Thunderbolt 4 (USB-C), 1x USB 3.1 Gen 1 Type-A, 1x Combo Audio Jack</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Conectividad</td>
+                                <td>Intel Wi-Fi 6 AX201 (2x2) y Bluetooth 5.0</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Batería</td>
+                                <td>66 Wh Li-ion polymer (hasta 10 horas de autonomía)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Dimensiones</td>
+                                <td>29.83 x 22.01 x 1.69 cm</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Peso</td>
+                                <td>1.34 kg</td>
+                            </tr>
+                            <tr>
+                                <td class="font-medium">Estado</td>
+                                <td>Seminuevo (Grado A: Mínimos signos de uso)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Pros y Contras Mejorada y Enfocada en el Producto -->
+            <section class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h2 class="text-3xl font-bold mb-5 border-b pb-3" style="color: var(--color-dark-blue); border-color: var(--color-very-light-blue);">Ventajas de esta HP Spectre x360 14</h2>
+                    <ul class="space-y-4 pros-list">
+                        <li><i class="fas fa-check-circle"></i><p><strong>Pantalla OLED Deslumbrante:</strong> Disfruta de una calidad de imagen superior con colores vivos y contraste infinito, ideal para consumo de contenido y trabajo creativo.</p></li>
+                        <li><i class="fas fa-check-circle"></i><p><strong>Diseño 2 en 1 Versátil:</strong> La bisagra de 360 grados te permite usarla como laptop, tablet, o en modo tienda para presentaciones, maximizando tu productividad.</p></li>
+                        <li><i class="fas fa-check-circle"></i><p><strong>Rendimiento Potente:</strong> Con su Intel Core i7 de 11ª generación y 16GB de RAM, maneja multitarea exigente y aplicaciones creativas sin esfuerzo.</p></li>
+                        <li><i class="fas fa-check-circle"></i><p><strong>Portabilidad Premium:</strong> Su diseño delgado, ligero y acabados de alta calidad la hacen perfecta para llevarla a cualquier parte con estilo.</p></li>
+                        <li><i class="fas fa-check-circle"></i><p><strong>Almacenamiento Ultrarrápido:</strong> El SSD NVMe de 512GB asegura arranques instantáneos y carga de aplicaciones en segundos.</p></li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold mb-5 border-b pb-3" style="color: var(--color-dark-blue); border-color: var(--color-very-light-blue);">Consideraciones al Comprar Seminuevo</h2>
+                    <ul class="space-y-4 cons-list">
+                        <li><i class="fas fa-times-circle"></i><p><strong>Posibles Marcas Estéticas:</strong> Al ser un equipo seminuevo, podría presentar mínimos signos de uso superficiales que no afectan su funcionalidad.</p></li>
+                        <li><i class="fas fa-times-circle"></i><p><strong>Autonomía de Batería:</strong> La duración de la batería, aunque buena, puede variar ligeramente respecto a un equipo nuevo debido a su uso previo.</p></li>
+                        <li><i class="fas fa-times-circle"></i><p><strong>Disponibilidad Limitada:</strong> Los equipos seminuevos son únicos y su inventario puede agotarse rápidamente. ¡No te quedes sin el tuyo!</p></li>
+                        <li><i class="fas fa-times-circle"></i><p><strong>Accesorios Originales:</strong> Es posible que algunos accesorios (cargador, lápiz óptico) sean genéricos o no los originales de fábrica, pero siempre funcionales.</p></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal para la cotización (eliminado) -->
+    <!-- <div id="quote-modal-overlay" class="quote-modal-overlay">
+        <div class="quote-modal-content">
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--color-dark-blue);">Generar Cotización</h2>
+            <p class="text-gray-700 mb-4">Por favor, ingresa tu nombre o el nombre de la empresa para la cotización:</p>
+            <input type="text" id="quote-name-input" placeholder="Tu nombre o nombre de la empresa" required>
+            
+            <div class="mb-4 flex items-center gap-3">
+                <label for="modal-product-quantity" class="font-semibold text-lg" style="color: var(--color-dark-blue);">Cantidad:</label>
+                <input type="number" id="modal-product-quantity" value="1" min="1" class="w-20 p-2 border border-gray-300 rounded-md text-center" style="border-color: var(--color-very-light-blue); color: var(--color-dark-blue);">
+            </div>
+
+            <div class="quote-modal-buttons">
+                <button id="cancel-quote-button" class="cancel-button">Cancelar</button>
+                <button id="confirm-quote-button" class="confirm-button">Generar PDF</button>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Loading Indicator (eliminado) -->
+    <!-- <div id="loading-indicator" class="loading-indicator">
+        <i class="fas fa-spinner fa-spin mr-2"></i> Generando cotización...
+    </div> -->
+
+    <script>
+        // Función para cambiar la imagen principal al hacer clic en una miniatura
+        function changeMainImage(src) {
+            const mainImage = document.getElementById('main-product-image');
+            const zoomedImageDisplay = document.querySelector('.zoomed-image-display');
+            mainImage.src = src;
+            zoomedImageDisplay.style.backgroundImage = `url('${src}')`;
+        }
+
+        // Script para el zoom de imagen
+        document.addEventListener('DOMContentLoaded', function() {
+            const zoomContainer = document.querySelector('.image-zoom-container');
+            const mainImage = document.getElementById('main-product-image');
+            const zoomLens = document.querySelector('.zoom-lens');
+            const zoomedImageDisplay = document.querySelector('.zoomed-image-display');
+
+            if (zoomContainer && mainImage && zoomLens && zoomedImageDisplay) {
+                // Inicializa la imagen de fondo para el zoom
+                zoomedImageDisplay.style.backgroundImage = `url('${mainImage.src}')`;
+
+                zoomContainer.addEventListener('mousemove', (e) => {
+                    // Solo activar el zoom en pantallas de escritorio
+                    if (window.innerWidth < 1024) {
+                        zoomLens.style.opacity = '0';
+                        zoomedImageDisplay.style.display = 'none';
+                        return;
+                    }
+
+                    const rect = zoomContainer.getBoundingClientRect();
+                    let x = e.clientX - rect.left; // x position within the element.
+                    let y = e.clientY - rect.top;  // y position within the element.
+
+                    // Asegurarse de que el cursor esté dentro de los límites de la imagen
+                    x = Math.max(0, Math.min(x, rect.width));
+                    y = Math.max(0, Math.min(y, rect.height));
+
+                    // Posicionar el lente de zoom
+                    zoomLens.style.left = `${x}px`;
+                    zoomLens.style.top = `${y}px`;
+
+                    // Mostrar la ventana de zoom
+                    zoomedImageDisplay.style.display = 'block';
+
+                    // Calcular la posición de la imagen magnificada
+                    const zoomFactor = 2; // Factor de zoom
+                    const lensWidth = zoomLens.offsetWidth;
+                    const lensHeight = zoomLens.offsetHeight;
+
+                    // Calcular la posición del fondo de la imagen magnificada
+                    const bgPosX = (x / rect.width) * 100;
+                    const bgPosY = (y / rect.height) * 100;
+
+                    zoomedImageDisplay.style.backgroundSize = `${mainImage.naturalWidth * zoomFactor}px ${mainImage.naturalHeight * zoomFactor}px`;
+                    zoomedImageDisplay.style.backgroundPosition = `calc(${bgPosX}% - ${x * zoomFactor}px) calc(${bgPosY}% - ${y * zoomFactor}px)`;
+                    zoomedImageDisplay.style.backgroundPosition = `${-x * zoomFactor + lensWidth / 2}px ${-y * zoomFactor + lensHeight / 2}px`;
+                });
+
+                zoomContainer.addEventListener('mouseenter', () => {
+                    if (window.innerWidth >= 1024) {
+                        zoomLens.style.opacity = '1';
+                        zoomedImageDisplay.style.display = 'block';
+                    }
+                });
+
+                zoomContainer.addEventListener('mouseleave', () => {
+                    zoomLens.style.opacity = '0';
+                    zoomedImageDisplay.style.display = 'none';
+                });
+            }
+        });
+
+        // Script para el slider vertical de Información Clave
+        document.addEventListener('DOMContentLoaded', function() {
+            const infoSliderWrapper = document.getElementById('info-slider-wrapper');
+            if (infoSliderWrapper) {
+                const slides = infoSliderWrapper.querySelectorAll('.info-slider-slide');
+                let currentSlide = 0;
+                const slideHeight = infoSliderWrapper.offsetHeight; // Altura del contenedor del slider
+
+                const updateSlider = () => {
+                    infoSliderWrapper.style.transform = `translateY(-${currentSlide * slideHeight}px)`;
+                };
+
+                // Asegurarse de que la altura del slider se calcule correctamente después de que todo el contenido esté cargado
+                window.addEventListener('load', () => {
+                    const initialSlideHeight = infoSliderWrapper.offsetHeight / slides.length; // Altura de un solo slide
+                    infoSliderWrapper.style.height = `${initialSlideHeight * slides.length}px`; // Ajustar la altura del wrapper para todos los slides
+
+                    setInterval(() => {
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        updateSlider();
+                    }, 3000); // Cambia cada 3 segundos
+                });
+
+                // Asegurarse de que el slider se ajuste al redimensionar la ventana
+                window.addEventListener('resize', updateSlider);
+            }
+        });
+
+
+        // Script para el header fijo y botones flotantes (copiado de tu código original)
+        document.addEventListener('DOMContentLoaded', function() {
+            const normalHeader = document.getElementById('normal-header');
+            const stickyHeader = document.getElementById('sticky-header');
+            const mainContentPusher = document.getElementById('main-content-pusher');
+            const whatsappFloatButton = document.getElementById('whatsapp-float-button');
+            const backToTopButton = document.getElementById('back-to-top-button');
+            
+            let scrollThreshold = 10; // Un pequeño umbral para iniciar
+            
+            const setupLayout = () => {
+                const normalHeaderHeight = normalHeader ? normalHeader.offsetHeight : 0;
+                // Ajusta el padding-top del mainContentPusher para que el contenido no quede debajo del header
+                // Si este main es el único contenido, ajusta el padding del body o de este main
+                // Para esta plantilla, ajustamos el padding-top del main para evitar que el contenido quede debajo del header.
+                if (mainContentPusher) {
+                    mainContentPusher.style.paddingTop = `${normalHeaderHeight + 20}px`; // Añadir un poco más de espacio
+                }
+                scrollThreshold = 10; // Reinicia el umbral
+            };
+
+            setupLayout();
+            window.addEventListener('resize', setupLayout);
+
+            let isStickyVisible = false;
+
+            const handleScroll = () => {
+                const currentScrollY = window.scrollY;
+
+                // Muestra el header fijo y oculta el normal
+                if (currentScrollY > scrollThreshold && !isStickyVisible) {
+                    isStickyVisible = true;
+                    if (stickyHeader) {
+                        stickyHeader.classList.remove('-translate-y-full', 'opacity-0');
+                    }
+                    if (normalHeader) {
+                        normalHeader.style.opacity = '0';
+                        normalHeader.style.pointerEvents = 'none'; // Deshabilita eventos de ratón en el header normal
+                    }
+                    
+                    // Mostrar botones flotantes
+                    if (whatsappFloatButton) whatsappFloatButton.classList.add('visible');
+                    if (backToTopButton) backToTopButton.classList.add('visible');
+
+                } 
+                // Muestra el header normal y oculta el fijo
+                else if (currentScrollY <= scrollThreshold && isStickyVisible) {
+                    isStickyVisible = false;
+                    if (stickyHeader) {
+                        stickyHeader.classList.add('-translate-y-full', 'opacity-0');
+                    }
+                    if (normalHeader) {
+                        normalHeader.style.opacity = '1';
+                        normalHeader.style.pointerEvents = 'auto'; // Habilita eventos de ratón en el header normal
+                    }
+
+                    // Ocultar botones flotantes
+                    if (whatsappFloatButton) whatsappFloatButton.classList.remove('visible');
+                    if (backToTopButton) backToTopButton.classList.remove('visible');
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+
+            // Script para las categorías activas (copiado de tu código original)
+            const categoryLinks = document.querySelectorAll('.icon-category-link');
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // JavaScript para los sliders (si los mantienes, asegúrate de que los IDs existan)
+            const mainBannerSlider = document.getElementById('main-banner-slider');
+            if (mainBannerSlider) {
+                const mainBannerSlides = mainBannerSlider.querySelector('div');
+                const mainBannerPrev = document.getElementById('main-banner-prev');
+                const mainBannerNext = document.getElementById('main-banner-next');
+                const mainBannerDots = document.querySelectorAll('.main-banner-dot');
+                let currentMainSlide = 0;
+
+                const updateMainSlider = () => {
+                    const slideWidth = mainBannerSlider.offsetWidth;
+                    mainBannerSlides.style.transform = `translateX(-${currentMainSlide * slideWidth}px)`;
+                    mainBannerDots.forEach((dot, index) => {
+                        if (index === currentMainSlide) {
+                            dot.classList.add('active');
+                            dot.style.opacity = '1';
+                        } else {
+                            dot.classList.remove('active');
+                            dot.style.opacity = '0.5';
+                        }
+                    });
+                };
+
+                mainBannerNext.addEventListener('click', () => {
+                    currentMainSlide = (currentMainSlide + 1) % mainBannerDots.length;
+                    updateMainSlider();
+                });
+
+                mainBannerPrev.addEventListener('click', () => {
+                    currentMainSlide = (currentMainSlide - 1 + mainBannerDots.length) % mainBannerDots.length;
+                    updateMainSlider();
+                });
+
+                mainBannerDots.forEach(dot => {
+                    dot.addEventListener('click', (e) => {
+                        currentMainSlide = parseInt(e.target.dataset.slide);
+                        updateMainSlider();
+                    });
+                });
+
+                // Inicializar slider principal
+                updateMainSlider();
+                window.addEventListener('resize', updateMainSlider);
+            }
+        });
+
+        // --- Funcionalidad de Cotización PDF (eliminada) ---
+        // Se ha eliminado todo el código JavaScript relacionado con la generación de PDF
+        // y el modal de cotización, ya que ahora se muestran políticas estáticas.
+    </script>
+</body>
+</html>
