@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computecpart | Tienda de Tecnología</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter (se mantiene como fallback si 'Arborea' no está disponible) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Definición de variables CSS para la paleta de colores */
+        :root {
+            --color-dark-blue: #133C55;
+            --color-medium-blue: #3B6FA4;
+            --color-light-blue: #59A5D8;
+            --color-very-light-blue: #84D2F6;
+            --color-lightest-blue: #91E5F6;
+            --color-whatsapp-green: #25D366;
+            --color-whatsapp-green-hover: #1DA851;
+            --color-accent-text: #FFFFFF; /* Blanco para texto en fondo oscuro */
+            --color-footer-bg: #F0F2F5; /* Un gris muy claro para el fondo del footer */
+            --color-footer-text: #495057; /* Texto oscuro para el footer */
+        }
+
+        /* Estilos base y fuentes */
+        body {
+            /* Para usar 'Arborea', necesitarías importar la fuente (ej. @font-face o @import url('path/to/arborea.css');) */
+            /* Si 'Arborea' no se carga, se usará 'Inter' como fallback. */
+            font-family: 'Arborea', 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Mantener un fondo claro general */
+            color: var(--color-dark-blue);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+        }
+
+        /* Efecto de cristal para la barra de navegación fija (Glassmorphism) */
+        .glass-effect {
+            background-color: rgba(255, 255, 255, 0.9); /* Mantener blanco con transparencia */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil */
+        }
+
+        /* Estilo para los enlaces de categoría (Icono + Texto) en la barra de navegación oscura */
+        .icon-category-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0.75rem 0.5rem;
+            border-radius: 0.5rem; /* Bordes redondeados para el efecto hover */
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease; /* Transiciones suaves */
+            cursor: pointer;
+            width: 120px;
+        }
+
+        .icon-category-link:hover,
+        .icon-category-link.active { /* Aplicar el mismo estilo para hover y active */
+            transform: translateY(-2px);
+            background-color: var(--color-light-blue); /* Fondo más claro al pasar el cursor/activo */
+        }
+
+        .icon-category-link i {
+            font-size: 1.75rem;
+            color: var(--color-accent-text); /* Iconos blancos por defecto en nav bar oscura */
+            margin-bottom: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .icon-category-link span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-accent-text); /* Texto blanco por defecto en nav bar oscura */
+            transition: color 0.2s ease;
+        }
+        
+        .icon-category-link.active i,
+        .icon-category-link.active span,
+        .icon-category-link:hover i,
+        .icon-category-link:hover span {
+            color: var(--color-accent-text); /* Texto e icono blanco en hover/active sobre fondo azul claro */
+        }
+
+        /* Estilos para la versión compacta de categorías en el header fijo */
+        .sticky-category-link {
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .sticky-category-link:hover,
+        .sticky-category-link.active { /* Aplicar el mismo estilo para hover y active */
+            background-color: var(--color-light-blue); /* Fondo más claro al pasar el cursor/activo */
+        }
+        .sticky-category-link span {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-accent-text); /* Texto blanco por defecto en sticky nav bar oscura */
+        }
+        .sticky-category-link:hover span,
+        .sticky-category-link.active span {
+            color: var(--color-accent-text); /* Texto blanco en hover/active sobre fondo azul claro */
+        }
+        
+        /* Transiciones para ocultar/mostrar headers */
+        #normal-header {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #sticky-header {
+            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+        }
+        
+        /* Estilos para el botón de WhatsApp flotante */
+        .whatsapp-float-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--color-whatsapp-green);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(100px); /* Oculto por defecto */
+            opacity: 0;
+            text-decoration: none; /* Asegura que no tenga subrayado */
+        }
+
+        .whatsapp-float-button.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .whatsapp-float-button:hover {
+            background-color: var(--color-whatsapp-green-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para el botón "Volver arriba" */
+        .back-to-top-button {
+            position: fixed;
+            bottom: 90px; /* Encima del botón de WhatsApp */
+            right: 20px;
+            background-color: var(--color-light-blue); /* Color de acento azul */
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(100px); /* Oculto por defecto */
+            opacity: 0;
+        }
+
+        .back-to-top-button.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .back-to-top-button:hover {
+            background-color: var(--color-medium-blue); /* Un azul más oscuro al pasar el ratón */
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para el número de WhatsApp en el header normal */
+        .whatsapp-header-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem; /* Espacio entre subtítulo y botón */
+            text-align: center;
+        }
+
+        .whatsapp-header-subtitle {
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500;
+            color: var(--color-lightest-blue); /* Un color que contraste pero sea sutil */
+            line-height: 1;
+        }
+
+        .whatsapp-header-number {
+            background-color: var(--color-whatsapp-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700; /* Extra bold */
+            font-size: 1.125rem; /* text-lg */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra más pronunciada */
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .whatsapp-header-number:hover {
+            background-color: var(--color-whatsapp-green-hover);
+            transform: scale(1.05); /* Efecto de crecimiento */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3); /* Sombra más grande al hover */
+        }
+        .whatsapp-header-number i {
+            font-size: 1.5rem; /* Icono más grande */
+        }
+        /* Asegurar que el span del número también use la fuente Arborea si está disponible */
+        .whatsapp-header-number span {
+            font-family: 'Arborea', 'Inter', sans-serif; 
+        }
+
+        /* Estilos para los banners de categoría */
+        .category-banner {
+            position: relative;
+            height: 300px; /* Altura fija para los banners verticales */
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .category-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.4); /* Overlay oscuro */
+            border-radius: 0.75rem;
+        }
+
+        .category-banner-content {
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem;
+        }
+
+        .category-banner h3 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-banner p {
+            font-size: 0.875rem; /* text-sm */
+            margin-bottom: 1rem;
+        }
+
+        .category-banner .btn-view-more {
+            display: inline-block;
+            background-color: var(--color-light-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* rounded-full */
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .category-banner .btn-view-more:hover {
+            background-color: var(--color-medium-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para los placeholders de productos */
+        .product-placeholder {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* shadow-sm */
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Distribuye el espacio */
+            height: 100%; /* Asegura que ocupen la altura disponible en la cuadrícula */
+            transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transiciones para animación */
+        }
+
+        .product-placeholder:hover {
+            transform: translateY(-5px); /* Efecto de elevación */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+        }
+
+        .product-placeholder-image {
+            width: 100%;
+            height: 120px; /* Altura fija para las imágenes de producto */
+            background-color: var(--color-lightest-blue); /* Color de fondo para placeholder */
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-dark-blue);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .product-placeholder-title {
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .product-placeholder-price {
+            font-weight: 700;
+            color: var(--color-medium-blue);
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-placeholder-button {
+            background-color: var(--color-dark-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            width: 100%; /* Ocupa todo el ancho disponible */
+        }
+
+        .product-placeholder-button:hover {
+            background-color: var(--color-medium-blue);
+        }
+
+        /* Responsive iframe for flipbook */
+        .responsive-iframe-container {
+            position: relative;
+            padding-bottom: 75%; /* 4:3 aspect ratio (height / width * 100) */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
+        @media (max-width: 768px) {
+            .icon-category-link {
+                width: 90px;
+                padding: 0.5rem 0.25rem;
+            }
+            .icon-category-link i { font-size: 1.5rem; }
+            .icon-category-link span { font-size: 0.7rem; }
+
+            /* Ajustes para la barra de búsqueda en el sticky header en móvil */
+            #sticky-header .search-mobile-visible {
+                display: block !important; /* Forzar visibilidad en móvil */
+                flex-grow: 1; /* Permitir que crezca */
+                max-width: none; /* Quitar límite de ancho */
+                margin-left: 0;
+                margin-right: 0;
+                padding: 0 1rem; /* Añadir padding para que no se pegue a los bordes */
+            }
+            #sticky-header .search-mobile-visible input {
+                width: 100%;
+                font-size: 0.9rem;
+                padding-left: 2.5rem; /* Ajustar padding para el icono */
+            }
+            #sticky-header .search-mobile-visible i {
+                left: 1.25rem; /* Ajustar posición del icono */
+            }
+
+            /* Mostrar más categorías en el sticky header en móvil */
+            .sticky-category-link {
+                display: block !important; /* Forzar visibilidad */
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            #sticky-header .container.px-6.h-12.flex.justify-center.items-center {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            #sticky-header .container.px-6.h-12.flex.justify-center.items-center nav {
+                flex-wrap: wrap; /* Permitir que las categorías se envuelvan */
+                justify-content: center;
+                gap: 0.5rem; /* Espacio más pequeño entre categorías */
+            }
+
+            /* Ajustes para las secciones de categorías en móvil */
+            .category-row {
+                flex-direction: column; /* Apilar banner y productos en móvil */
+            }
+            .category-banner {
+                width: 100%;
+                height: 200px; /* Altura más pequeña para el banner en móvil */
+                margin-bottom: 1.5rem; /* Espacio entre banner y productos */
+            }
+            .category-products-grid {
+                width: 100%;
+                grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columnas en móvil */
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .category-products-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columnas en tablet */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor del Header -->
+    <div id="header-container" class="fixed top-0 left-0 w-full z-50">
+        
+        <!-- Header Principal (Visible por defecto) -->
+        <div id="normal-header">
+            <!-- 1. Barra Superior -->
+            <div class="bg-gray-800 text-white text-xs border-b border-gray-700" style="background-color: var(--color-dark-blue); border-color: var(--color-medium-blue);">
+                <div class="container mx-auto px-6 h-8 flex justify-between items-center">
+                    <div class="hidden md:flex items-center gap-4">
+                        <a href="mailto:info@computecpart.com" class="hover:text-blue-400" style="color: white;" aria-label="Enviar correo a info@computecpart.com"><i class="fas fa-envelope mr-1"></i> info@computecpart.com</a>
+                        <a href="tel:+123456789" class="hover:text-blue-400" style="color: white;" aria-label="Llamar a +123 456 789"><i class="fas fa-phone-alt mr-1"></i> +123 456 789</a>
+                    </div>
+                    <div class="flex w-full justify-center md:w-auto md:justify-end items-center gap-6">
+                        <a href="#top" class="hover:text-blue-400" style="color: white;" aria-label="Ir a la página de inicio">Inicio</a>
+                        <a href="#conocenos-section" class="hover:text-blue-400" style="color: white;" aria-label="Conocer más sobre nosotros">Conócenos</a>
+                        <a href="#contactanos-section" class="hover:text-blue-400" style="color: white;" aria-label="Contactar a Computecpart">Contáctanos</a>
+                        <a href="#catalogo-section" class="hover:text-blue-400" style="color: white;" aria-label="Ver nuestro catálogo">Catálogo</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Barra Principal (Logo, WhatsApp y Búsqueda) -->
+            <div class="shadow-md" style="background-color: var(--color-dark-blue);">
+                <div class="container mx-auto px-6 h-20 flex justify-between items-center">
+                    <a href="#top" class="flex items-center gap-3" aria-label="Ir a la página de inicio de Computecpart">
+                        <img src="https://placehold.co/60x60/59A5D8/ffffff?text=C&font=inter" alt="Logo de Computecpart" class="h-12 w-12 rounded-lg">
+                        <span class="font-extrabold text-2xl tracking-tight" style="color: var(--color-accent-text);">Computecpart</span>
+                    </a>
+                    <!-- Grupo de WhatsApp en el header normal con subtítulo y nuevo diseño -->
+                    <div class="hidden sm:flex whatsapp-header-group">
+                        <span class="whatsapp-header-subtitle" style="color: var(--color-lightest-blue);">Cotiza con nosotros</span>
+                        <a href="https://wa.me/50378901234" target="_blank" rel="noopener noreferrer" class="whatsapp-header-number" aria-label="Contactar por WhatsApp al +503 7890-1234">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+503 7890-1234</span>
+                        </a>
+                    </div>
+                    <div class="hidden md:block flex-1 max-w-lg ml-8">
+                        <div class="relative">
+                            <input type="text" placeholder="Busca los mejores equipos seminuevos..." class="w-full py-3 pl-12 pr-4 border border-gray-200 rounded-full focus:outline-none focus:ring-2" style="border-color: var(--color-very-light-blue); background-color: var(--color-lightest-blue); color: var(--color-dark-blue); focus-ring-color: var(--color-light-blue);" aria-label="Campo de búsqueda de productos">
+                            <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2" style="color: var(--color-medium-blue);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Barra de Navegación de Categorías -->
+            <nav class="border-t border-gray-100 shadow-sm" style="background-color: var(--color-dark-blue); border-color: var(--color-medium-blue);">
+                <div class="container mx-auto px-4 py-2">
+                    <div class="flex flex-wrap justify-center gap-2 md:gap-4">
+                        <a href="#open-box-category" class="icon-category-link" aria-label="Ver categoría Open Box"><i class="fas fa-box-open"></i><span>Open Box</span></a>
+                        <a href="#laptops-category" class="icon-category-link" aria-label="Ver categoría Laptops"><i class="fas fa-laptop"></i><span>Laptops</span></a>
+                        <a href="#desktops-category" class="icon-category-link" aria-label="Ver categoría Desktops"><i class="fa-solid fa-hard-drive"></i><span>Desktops</span></a>
+                        <a href="#monitores-category" class="icon-category-link" aria-label="Ver categoría Monitores"><i class="fas fa-tv"></i><span>Monitores</span></a>
+                        <a href="#puntos-de-venta-category" class="icon-category-link" aria-label="Ver categoría Puntos de Venta"><i class="fas fa-cash-register"></i><span>Puntos de Venta</span></a>
+                        <a href="#equipos-completos-category" class="icon-category-link" aria-label="Ver categoría Equipos Completos"><i class="fa-solid fa-computer"></i><span>Equipos Completos</span></a>
+                        <a href="#catalogo-section" class="icon-category-link" aria-label="Ver nuestro catálogo"><i class="fas fa-book-open"></i><span>Catálogos</span></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Header Fijo de dos niveles (Aparece con Scroll) -->
+        <div id="sticky-header" class="glass-effect absolute top-0 left-0 w-full shadow-lg transform -translate-y-full opacity-0">
+            <!-- Fila Superior del Header Fijo -->
+            <div class="container mx-auto px-6 h-14 flex justify-between items-center border-b border-gray-200/80" style="background-color: var(--color-dark-blue); border-color: rgba(0, 0, 0, 0.05);">
+                <a href="#top" class="flex items-center gap-2 flex-shrink-0" aria-label="Ir a la página de inicio de Computecpart">
+                    <img src="https://placehold.co/60x60/59A5D8/ffffff?text=C&font=inter" alt="Logo de Computecpart" class="h-8 w-8 rounded-md">
+                    <span class="hidden sm:block font-bold text-xl" style="color: var(--color-accent-text);">Computecpart</span>
+                </a>
+                <!-- Barra de búsqueda en el sticky header (visible en móvil también) -->
+                <div class="flex-1 max-w-sm mx-4 search-mobile-visible">
+                    <div class="relative">
+                        <input type="text" placeholder="Busca en Computecpart..." class="w-full py-2 pl-10 pr-4 border rounded-full focus:outline-none focus:ring-1" style="border-color: var(--color-very-light-blue); background-color: var(--color-lightest-blue); color: var(--color-dark-blue); focus-ring-color: var(--color-light-blue);" aria-label="Campo de búsqueda de productos en el menú fijo">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2" style="color: var(--color-medium-blue);"></i>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-4 md:gap-6 text-sm font-medium">
+                    <a href="#top" class="hover:text-blue-600 transition-colors" style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);" aria-label="Ir a la página de inicio">Inicio</a>
+                    <a href="#conocenos-section" class="hover:text-blue-600 transition-colors" style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);" aria-label="Conocer más sobre nosotros">Conócenos</a>
+                    <a href="#contactanos-section" class="hover:text-blue-600 transition-colors" style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);" aria-label="Contactar a Computecpart">Contáctanos</a>
+                    <a href="#catalogo-section" class="hover:text-blue-600 transition-colors" style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);" aria-label="Ver nuestro catálogo">Catálogo</a>
+                </nav>
+            </div>
+            <!-- Fila Inferior del Header Fijo (Categorías - visible en móvil también) -->
+            <div class="container mx-auto px-6 h-12 flex justify-center items-center" style="background-color: var(--color-dark-blue);">
+                    <nav class="flex items-center gap-4 md:gap-6">
+                    <a href="#open-box-category" class="sticky-category-link" aria-label="Ver categoría Open Box"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Open Box</span></a>
+                    <a href="#laptops-category" class="sticky-category-link" aria-label="Ver categoría Laptops"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Laptops</span></a>
+                    <a href="#desktops-category" class="sticky-category-link" aria-label="Ver categoría Desktops"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Desktops</span></a>
+                    <a href="#monitores-category" class="sticky-category-link" aria-label="Ver categoría Monitores"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Monitores</span></a>
+                    <a href="#puntos-de-venta-category" class="sticky-category-link" aria-label="Ver categoría Puntos de Venta"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Puntos de Venta</span></a>
+                    <a href="#equipos-completos-category" class="sticky-category-link" aria-label="Ver categoría Equipos Completos"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Equipos Completos</span></a>
+                    <a href="#catalogo-section" class="sticky-category-link" aria-label="Ver nuestro catálogo"><span style="color: var(--color-accent-text); hover-color: var(--color-lightest-blue);">Catálogos</span></a>
+                    </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main id="main-content-pusher">
+        <!-- Contenedor de Banners -->
+        <section id="top" class="container mx-auto px-6 pt-12 pb-6 flex flex-col lg:flex-row gap-6">
+            <!-- Banner Principal (Horizontal Slider) -->
+            <div id="main-banner-slider" class="relative w-full lg:w-2/3 rounded-xl overflow-hidden shadow-lg h-[250px] md:h-[400px] lg:h-[450px] xl:h-[500px]">
+                <div class="flex transition-transform duration-500 ease-in-out h-full" style="width: 300%;">
+                    <!-- Slide 1: Laptops Seminuevas -->
+                    <div class="w-1/3 flex-shrink-0 relative">
+                        <img src="https://placehold.co/1220x872/59A5D8/ffffff?text=Laptops+Seminuevas" alt="Ofertas en Laptops Seminuevas de Alta Calidad" class="w-full h-full object-cover rounded-xl">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-8 text-white">
+                            <p class="text-xs md:text-sm font-semibold uppercase tracking-wider mb-2">CALIDAD GARANTIZADA</p>
+                            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight">LAPTOPS <br> SEMINUEVAS</h2>
+                            <p class="text-xs md:text-sm mt-2">Rendimiento y ahorro en un solo lugar.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2: Equipos Open Box -->
+                    <div class="w-1/3 flex-shrink-0 relative">
+                        <img src="https://placehold.co/1220x872/3B6FA4/ffffff?text=Equipos+Open+Box" alt="Descubre Equipos Open Box con Descuentos" class="w-full h-full object-cover rounded-xl">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-8 text-white">
+                            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight">EQUIPOS <br> OPEN BOX</h2>
+                            <p class="text-xs md:text-sm mt-2">Productos como nuevos, precios increíbles.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3: Tecnología Reacondicionada -->
+                    <div class="w-1/3 flex-shrink-0 relative">
+                        <img src="https://placehold.co/1220x872/133C55/ffffff?text=Tecnologia+Reacondicionada" alt="Tecnología Reacondicionada de Confianza" class="w-full h-full object-cover rounded-xl">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-8 text-white">
+                            <p class="text-xs md:text-sm font-semibold uppercase tracking-wider mb-2">RENDIMIENTO GARANTIZADO</p>
+                            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight">TECNOLOGÍA <br> REACONDICIONADA</h2>
+                            <p class="text-xs md:text-sm mt-2">Rendimiento óptimo, impacto mínimo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Navegación -->
+                <button id="main-banner-prev" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 active:bg-opacity-70 text-white p-3 rounded-full focus:outline-none transition-all duration-300" aria-label="Diapositiva anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="main-banner-next" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 active:bg-opacity-70 text-white p-3 rounded-full focus:outline-none transition-all duration-300" aria-label="Siguiente diapositiva">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Puntos Indicadores -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2" role="tablist">
+                    <button class="w-3 h-3 bg-white rounded-full opacity-50 focus:outline-none transition-opacity duration-300 main-banner-dot active" data-slide="0" role="tab" aria-selected="true" aria-controls="slide-0" aria-label="Ir a la diapositiva 1"></button>
+                    <button class="w-3 h-3 bg-white rounded-full opacity-50 focus:outline-none transition-opacity duration-300 main-banner-dot" data-slide="1" role="tab" aria-selected="false" aria-controls="slide-1" aria-label="Ir a la diapositiva 2"></button>
+                    <button class="w-3 h-3 bg-white rounded-full opacity-50 focus:outline-none transition-opacity duration-300 main-banner-dot" data-slide="2" role="tab" aria-selected="false" aria-controls="slide-2" aria-label="Ir a la diapositiva 3"></button>
+                </div>
+            </div>
+
+            <!-- Banner Vertical (Side Banner) -->
+            <div id="side-banner-slider" class="relative w-full lg:w-1/3 rounded-xl overflow-hidden shadow-lg h-[250px] md:h-[400px] lg:h-[450px] xl:h-[500px]">
+                <div class="flex transition-transform duration-500 ease-in-out h-full" style="width: 100%;">
+                    <!-- Slide 1 (solo una imagen por ahora) -->
+                    <div class="w-full flex-shrink-0 relative">
+                        <img src="https://placehold.co/560x872/3B6FA4/ffffff?text=Ofertas+Exclusivas" alt="Ofertas Exclusivas en Equipos Seminuevos" class="w-full h-full object-cover rounded-xl">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-8 text-white">
+                            <p class="text-xs md:text-sm font-semibold uppercase tracking-wider mb-2">AHORRA CON NOSOTROS</p>
+                            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight">OFERTAS <br> EXCLUSIVAS</h2>
+                            <p class="text-xs md:text-sm mt-2">Rendimiento óptimo, impacto mínimo.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- No se necesitan flechas/puntos para una sola imagen, pero la estructura permite futura expansión -->
+            </div>
+        </section>
+
+        <!-- Sección de Características/Servicios -->
+        <section class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Característica 1: Soporte 24/7 -->
+                <div class="flex flex-col items-center p-6 bg-white rounded-xl shadow-md">
+                    <i class="fas fa-headset text-5xl mb-4" style="color: var(--color-whatsapp-green);"></i>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--color-dark-blue);">SOPORTE 24/7</h3>
+                    <p class="text-sm" style="color: var(--color-medium-blue);">Contáctanos 24 horas al día, 7 días a la semana</p>
+                </div>
+                <!-- Característica 2: Envío Gratis -->
+                <div class="flex flex-col items-center p-6 bg-white rounded-xl shadow-md">
+                    <i class="fas fa-truck text-5xl mb-4" style="color: var(--color-whatsapp-green);"></i>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--color-dark-blue);">ENVÍO GRATIS</h3>
+                    <p class="text-sm" style="color: var(--color-medium-blue);">Envío gratis en todas las órdenes de El Salvador o mayores a $99</p>
+                </div>
+                <!-- Característica 3: Pago 100% Seguro -->
+                <div class="flex flex-col items-center p-6 bg-white rounded-xl shadow-md">
+                    <i class="fas fa-shield-alt text-5xl mb-4" style="color: var(--color-whatsapp-green);"></i>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--color-dark-blue);">PAGO 100% SEGURO</h3>
+                    <p class="text-sm" style="color: var(--color-medium-blue);">Aseguramos pagos seguros con las mejores plataformas</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secciones de Categorías con Productos (6 filas) -->
+        <section class="container mx-auto px-6 py-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-10" style="color: var(--color-dark-blue);">Explora Nuestras Categorías</h2>
+
+            <!-- Categoría: Open Box Collection -->
+            <section id="open-box-category" class="bg-white rounded-xl shadow-lg p-6 mb-12 transition-all duration-300 hover:shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-4" style="color: var(--color-dark-blue);">Open Box: Calidad Premium a Precios Insuperables</h3>
+                <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                    Descubre equipos con la calidad de un producto nuevo y precios que te encantarán. Nuestros productos Open Box son inspeccionados y certificados para garantizar un rendimiento óptimo. ¡Perfectos para un gran ahorro en El Salvador sin comprometer la calidad!
+                </p>
+                <div class="flex flex-col lg:flex-row gap-6 category-row">
+                    <div class="w-full lg:w-1/4 category-banner" style="background-image: url('https://placehold.co/560x872/59A5D8/ffffff?text=Open+Box');">
+                        <div class="category-banner-content">
+                            <h3 class="text-white">OPEN BOX</h3>
+                            <a href="#" class="btn-view-more" aria-label="Ver todos los productos Open Box">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-4 category-products-grid">
+                        <!-- Producto Placeholder 1 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Open Box 1</div>
+                            <span class="product-placeholder-title">Laptop Open Box A</span>
+                            <span class="product-placeholder-price">$499.99</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 2 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Open Box 2</div>
+                            <span class="product-placeholder-title">Monitor Open Box B</span>
+                            <span class="product-placeholder-price">$189.99</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 3 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Open Box 3</div>
+                            <span class="product-placeholder-title">Desktop Open Box C</span>
+                            <span class="product-placeholder-price">$679.99</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 4 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Open Box 4</div>
+                            <span class="product-placeholder-title">Tablet Open Box D</span>
+                            <span class="product-placeholder-price">$299.99</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categoría: Laptops Collection -->
+            <section id="laptops-category" class="bg-white rounded-xl shadow-lg p-6 mb-12 transition-all duration-300 hover:shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-4" style="color: var(--color-dark-blue);">Laptops: Potencia y Portabilidad para tu Día a Día</h3>
+                <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                    Encuentra la laptop perfecta para tu productividad, estudios o entretenimiento. Ofrecemos laptops seminuevas de alto rendimiento, ideales para profesionales y estudiantes en El Salvador que buscan calidad y eficiencia a un precio justo.
+                </p>
+                <div class="flex flex-col lg:flex-row gap-6 category-row">
+                    <div class="w-full lg:w-1/4 category-banner" style="background-image: url('https://placehold.co/560x872/3B6FA4/ffffff?text=Laptops');">
+                        <div class="category-banner-content">
+                            <h3 class="text-white">LAPTOPS</h3>
+                            <a href="#" class="btn-view-more" aria-label="Ver todas las Laptops">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-4 category-products-grid">
+                        <!-- Producto Placeholder 1 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Laptop 1</div>
+                            <span class="product-placeholder-title">Laptop Ultrabook</span>
+                            <span class="product-placeholder-price">$799.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 2 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Laptop 2</div>
+                            <span class="product-placeholder-title">Laptop Gaming Pro</span>
+                            <span class="product-placeholder-price">$1200.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 3 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Laptop 3</div>
+                            <span class="product-placeholder-title">Laptop Empresarial</span>
+                            <span class="product-placeholder-price">$850.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 4 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Laptop 4</div>
+                            <span class="product-placeholder-title">Laptop Económica</span>
+                            <span class="product-placeholder-price">$550.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categoría: Desktops Collection -->
+            <section id="desktops-category" class="bg-white rounded-xl shadow-lg p-6 mb-12 transition-all duration-300 hover:shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-4" style="color: var(--color-dark-blue);">Desktops: La Potencia Fija que tu Espacio Necesita</h3>
+                <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                    Para tu oficina, estudio o centro de entretenimiento en casa, nuestros desktops reacondicionados ofrecen la potencia y estabilidad que buscas. Explora opciones para gaming, diseño o trabajo pesado, con la garantía de Computecpart en El Salvador.
+                </p>
+                <div class="flex flex-col lg:flex-row gap-6 category-row">
+                    <div class="w-full lg:w-1/4 category-banner" style="background-image: url('https://placehold.co/560x872/133C55/ffffff?text=Desktops');">
+                        <div class="category-banner-content">
+                            <h3 class="text-white">DESKTOPS</h3>
+                            <a href="#" class="btn-view-more" aria-label="Ver todos los Desktops">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-4 category-products-grid">
+                        <!-- Producto Placeholder 1 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Desktop 1</div>
+                            <span class="product-placeholder-title">Desktop Gamer</span>
+                            <span class="product-placeholder-price">$999.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 2 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Desktop 2</div>
+                            <span class="product-placeholder-title">PC Oficina</span>
+                            <span class="product-placeholder-price">$599.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 3 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Desktop 3</div>
+                            <span class="product-placeholder-title">Workstation Pro</span>
+                            <span class="product-placeholder-price">$1500.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 4 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Desktop 4</div>
+                            <span class="product-placeholder-title">Mini PC</span>
+                            <span class="product-placeholder-price">$350.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categoría: Monitores Collection -->
+            <section id="monitores-category" class="bg-white rounded-xl shadow-lg p-6 mb-12 transition-all duration-300 hover:shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-4" style="color: var(--color-dark-blue);">Monitores: Visualiza tu Mundo con la Mejor Calidad</h3>
+                <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                    Complementa tu equipo con nuestros monitores seminuevos y reacondicionados. Desde pantallas para trabajo diario hasta monitores gaming de alta tasa de refresco, encuentra la claridad y el color que necesitas en El Salvador.
+                </p>
+                <div class="flex flex-col lg:flex-row gap-6 category-row">
+                    <div class="w-full lg:w-1/4 category-banner" style="background-image: url('https://placehold.co/560x872/84D2F6/ffffff?text=Monitores');">
+                        <div class="category-banner-content">
+                            <h3 class="text-white">MONITORES</h3>
+                            <a href="#" class="btn-view-more" aria-label="Ver todos los Monitores">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-4 category-products-grid">
+                        <!-- Producto Placeholder 1 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Monitor 1</div>
+                            <span class="product-placeholder-title">Monitor Curvo 27"</span>
+                            <span class="product-placeholder-price">$249.99</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 2 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Monitor 2</div>
+                            <span class="product-placeholder-title">Monitor Gaming 144Hz</span>
+                            <span class="product-placeholder-price">$329.99</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 3 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Monitor 3</div>
+                            <span class="product-placeholder-title">Monitor Oficina 24"</span>
+                            <span class="product-placeholder-price">$150.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 4 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Monitor 4</div>
+                            <span class="product-placeholder-title">Monitor 4K 32"</span>
+                            <span class="product-placeholder-price">$499.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categoría: Puntos de Venta Collection -->
+            <section id="puntos-de-venta-category" class="bg-white rounded-xl shadow-lg p-6 mb-12 transition-all duration-300 hover:shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-4" style="color: var(--color-dark-blue);">Puntos de Venta: Soluciones Robustas para tu Negocio</h3>
+                <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                    Optimiza las operaciones de tu comercio con nuestros sistemas de punto de venta. Ofrecemos terminales, impresoras y lectores de código de barras reacondicionados, ideales para cualquier tipo de negocio en El Salvador. ¡Eficiencia y durabilidad garantizadas!
+                </p>
+                <div class="flex flex-col lg:flex-row gap-6 category-row">
+                    <div class="w-full lg:w-1/4 category-banner" style="background-image: url('https://placehold.co/560x872/91E5F6/ffffff?text=Puntos+de+Venta');">
+                        <div class="category-banner-content">
+                            <h3 class="text-white">PUNTOS DE VENTA</h3>
+                            <a href="#" class="btn-view-more" aria-label="Ver todos los Puntos de Venta">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-4 category-products-grid">
+                        <!-- Producto Placeholder 1 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">POS 1</div>
+                            <span class="product-placeholder-title">Terminal POS</span>
+                            <span class="product-placeholder-price">$850.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 2 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">POS 2</div>
+                            <span class="product-placeholder-title">Impresora Térmica</span>
+                            <span class="product-placeholder-price">$120.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 3 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">POS 3</div>
+                            <span class="product-placeholder-title">Lector Código Barras</span>
+                            <span class="product-placeholder-price">$75.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 4 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">POS 4</div>
+                            <span class="product-placeholder-title">Cajón de Dinero</span>
+                            <span class="product-placeholder-price">$60.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categoría: Equipos Completos Collection -->
+            <section id="equipos-completos-category" class="bg-white rounded-xl shadow-lg p-6 mb-12 transition-all duration-300 hover:shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-4" style="color: var(--color-dark-blue);">Equipos Completos: Soluciones Plug and Play para tu Comodidad</h3>
+                <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                    Simplifica tu vida con nuestros paquetes de equipos completos. Listos para usar, estos bundles incluyen todo lo necesario para empezar a trabajar o disfrutar desde el primer momento. ¡La solución ideal para hogares y oficinas en El Salvador!
+                </p>
+                <div class="flex flex-col lg:flex-row gap-6 category-row">
+                    <div class="w-full lg:w-1/4 category-banner" style="background-image: url('https://placehold.co/560x872/25D366/ffffff?text=Equipos+Completos');">
+                        <div class="category-banner-content">
+                            <h3 class="text-white">EQUIPOS COMPLETOS</h3>
+                            <a href="#" class="btn-view-more" aria-label="Ver todos los Equipos Completos">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-4 category-products-grid">
+                        <!-- Producto Placeholder 1 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Equipo 1</div>
+                            <span class="product-placeholder-title">Kit PC + Monitor</span>
+                            <span class="product-placeholder-price">$899.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 2 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Equipo 2</div>
+                            <span class="product-placeholder-title">Laptop + Accesorios</span>
+                            <span class="product-placeholder-price">$950.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 3 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Equipo 3</div>
+                            <span class="product-placeholder-title">Desktop + Periféricos</span>
+                            <span class="product-placeholder-price">$750.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                        <!-- Producto Placeholder 4 -->
+                        <div class="product-placeholder">
+                            <div class="product-placeholder-image">Equipo 4</div>
+                            <span class="product-placeholder-title">Punto de Venta Completo</span>
+                            <span class="product-placeholder-price">$1100.00</span>
+                            <button class="product-placeholder-button">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Sección "Conócenos" -->
+        <section id="conocenos-section" class="container mx-auto px-6 py-12 bg-white rounded-xl shadow-md mb-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-6" style="color: var(--color-dark-blue);">Conócenos: Tu Aliado Tecnológico en El Salvador</h2>
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <p class="text-lg leading-relaxed mb-4" style="color: var(--color-medium-blue);">
+                        En <strong style="color: var(--color-dark-blue);">Computecpart</strong>, nos enorgullece ser una empresa 100% salvadoreña con la misión de democratizar el acceso a la tecnología de calidad. Desde nuestro corazón en El Salvador, te ofrecemos una cuidadosa selección de equipos tecnológicos seminuevos y reacondicionados, garantizando rendimiento y durabilidad a precios que se ajustan a tu presupuesto.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4" style="color: var(--color-medium-blue);">
+                        Cada laptop, desktop, monitor o equipo de punto de venta que llega a tus manos ha pasado por un <strong style="color: var(--color-dark-blue);">riguroso proceso de inspección, limpieza y optimización</strong>. Nos comprometemos con la excelencia, asegurando que cada producto funcione como nuevo, contribuyendo así a la economía local y fomentando un consumo más sostenible.
+                    </p>
+                    <p class="text-lg leading-relaxed" style="color: var(--color-medium-blue);">
+                        Somos más que una tienda; somos tu socio confiable en tecnología. Descubre la diferencia de Computecpart y únete a nuestra comunidad de clientes satisfechos en todo El Salvador.
+                    </p>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <img src="https://placehold.co/600x400/84D2F6/133C55?text=Sobre+Nosotros" alt="Equipo de Computecpart trabajando en El Salvador" class="rounded-xl shadow-lg w-full max-w-md">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección "Contáctanos" -->
+        <section id="contactanos-section" class="container mx-auto px-6 py-12 bg-white rounded-xl shadow-md mb-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-6" style="color: var(--color-dark-blue);">Contáctanos: Tu Solución Tecnológica en El Salvador</h2>
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <p class="text-lg leading-relaxed mb-4" style="color: var(--color-medium-blue);">
+                        ¿Listo para potenciar tu hogar o negocio con la mejor tecnología seminueva? ¿Necesitas una cotización personalizada o estás buscando una gran cantidad de equipos para tu empresa?
+                    </p>
+                    <p class="text-xl font-bold mb-6" style="color: var(--color-dark-blue);">
+                        ¡No te pierdas nuestras <span style="color: var(--color-light-blue);">ofertas flash</span> y <span style="color: var(--color-light-blue);">precios especiales</span> por volumen!
+                    </p>
+                    <p class="text-lg leading-relaxed mb-6" style="color: var(--color-medium-blue);">
+                        Nuestro equipo de ejecutivos de ventas está listo para asesorarte y encontrar la solución perfecta para tus necesidades tecnológicas en El Salvador.
+                    </p>
+                    <a href="https://wa.me/50378901234?text=Hola!%20Me%20interesa%20saber%20más%20sobre%20sus%20productos%20y%20ofertas%20especiales." target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-green-500 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300" style="background-color: var(--color-whatsapp-green); hover-background-color: var(--color-whatsapp-green-hover);">
+                        <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                        <span>WhatsApp Directo: +503 7890-1234</span>
+                    </a>
+                    <p class="text-sm mt-4" style="color: var(--color-medium-blue);">
+                        También puedes enviarnos un correo electrónico a <a href="mailto:info@computecpart.com" class="text-blue-500 hover:underline" style="color: var(--color-light-blue);">info@computecpart.com</a> o visitar nuestra tienda física.
+                    </p>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <img src="https://placehold.co/600x400/59A5D8/133C55?text=Contactanos" alt="Persona contactando por WhatsApp en El Salvador" class="rounded-xl shadow-lg w-full max-w-md">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección "Catálogo" -->
+        <section id="catalogo-section" class="container mx-auto px-6 py-12 bg-white rounded-xl shadow-md mb-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-6" style="color: var(--color-dark-blue);">Explora Nuestro Catálogo Digital de Computecpart</h2>
+            <p class="text-center text-lg mb-8" style="color: var(--color-medium-blue);">
+                Sumérgete en nuestra extensa colección de laptops, desktops, monitores y equipos de punto de venta seminuevos y reacondicionados. Nuestro catálogo interactivo está diseñado para que encuentres fácilmente el equipo perfecto que se adapte a tus necesidades y presupuesto.
+            </p>
+            <div class="flex justify-center mb-8">
+                <a href="https://heyzine.com/flip-book/bfe7e4e12b.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-blue-500 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300" style="background-color: var(--color-light-blue); hover-background-color: var(--color-medium-blue);">
+                    <i class="fas fa-book-open text-2xl mr-3"></i>
+                    <span>Ver Catálogo Completo</span>
+                </a>
+            </div>
+            <!-- Iframe para el flip-book -->
+            <div class="responsive-iframe-container">
+                <iframe src="https://heyzine.com/flip-book/bfe7e4e12b.html" title="Catálogo Digital Computecpart El Salvador" allowfullscreen></iframe>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer Profesional -->
+    <footer class="py-12" style="background-color: var(--color-footer-bg); color: var(--color-footer-text);">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Columna 1: Logo y Descripción -->
+            <div class="col-span-full md:col-span-1 text-center md:text-left">
+                <a href="#top" class="flex items-center justify-center md:justify-start gap-3 mb-4" aria-label="Ir a la página de inicio de Computecpart">
+                    <img src="https://placehold.co/60x60/59A5D8/133C55?text=C&font=inter" alt="Logo de Computecpart" class="h-12 w-12 rounded-lg">
+                    <span class="font-extrabold text-2xl tracking-tight" style="color: var(--color-dark-blue);">Computecpart</span>
+                </a>
+                <p class="text-sm leading-relaxed" style="color: var(--color-footer-text);">
+                    Tu tienda de confianza para equipos tecnológicos seminuevos y reacondicionados en El Salvador. Calidad y rendimiento garantizados para tu hogar o negocio.
+                </p>
+            </div>
+
+            <!-- Columna 2: Navegación Rápida -->
+            <div class="text-center md:text-left">
+                <h4 class="font-bold text-lg mb-4" style="color: var(--color-dark-blue);">Navegación Rápida</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#top" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Inicio</a></li>
+                    <li><a href="#conocenos-section" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Conócenos</a></li>
+                    <li><a href="#contactanos-section" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Contáctanos</a></li>
+                    <li><a href="#catalogo-section" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Catálogo</a></li>
+                    <li><a href="#" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Categorías -->
+            <div class="text-center md:text-left">
+                <h4 class="font-bold text-lg mb-4" style="color: var(--color-dark-blue);">Categorías</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#open-box-category" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Open Box</a></li>
+                    <li><a href="#laptops-category" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Laptops</a></li>
+                    <li><a href="#desktops-category" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Desktops</a></li>
+                    <li><a href="#monitores-category" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Monitores</a></li>
+                    <li><a href="#puntos-de-venta-category" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Puntos de Venta</a></li>
+                    <li><a href="#equipos-completos-category" class="hover:text-blue-500 transition-colors" style="color: var(--color-footer-text);">Equipos Completos</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 4: Newsletter y Redes Sociales -->
+            <div class="col-span-full lg:col-span-1 text-center md:text-left">
+                <h4 class="font-bold text-lg mb-4" style="color: var(--color-dark-blue);">Suscríbete a Nuestro Newsletter</h4>
+                <p class="text-sm mb-4" style="color: var(--color-footer-text);">
+                    Regístrate con tu email y sé el primero en conocer nuestras ofertas especiales. Además, ¡recibe un 15% de descuento en tu próxima compra!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-2 mb-6">
+                    <input type="email" placeholder="Ingresa tu e-mail" class="flex-1 p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" style="background-color: white; color: var(--color-dark-blue);" aria-label="Campo para ingresar email para newsletter">
+                    <button class="bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition-colors" style="background-color: var(--color-light-blue); hover-background-color: var(--color-medium-blue);">Unirse</button>
+                </div>
+                <div class="flex justify-center md:justify-start space-x-4 text-2xl">
+                    <a href="#" class="hover:text-blue-500 transition-colors" style="color: var(--color-dark-blue);" aria-label="Visita nuestra página de Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-blue-500 transition-colors" style="color: var(--color-dark-blue);" aria-label="Visita nuestro perfil de Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-500 transition-colors" style="color: var(--color-dark-blue);" aria-label="Visita nuestro perfil de Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-blue-500 transition-colors" style="color: var(--color-dark-blue);" aria-label="Visita nuestro perfil de LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-300 mt-8 pt-8 text-center text-sm" style="border-color: rgba(0,0,0,0.1);">
+            &copy; <span id="current-year"></span> Computecpart. Todos los derechos reservados.
+        </div>
+    </footer>
+
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/50378901234?text=Hola!%20Me%20interesa%20saber%20más%20sobre%20sus%20productos." target="_blank" rel="noopener noreferrer" class="whatsapp-float-button" id="whatsapp-float-button" aria-label="Escribe a un ejecutivo de ventas por WhatsApp">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span>Escribe a un ejecutivo</span>
+    </a>
+
+    <!-- Botón flotante "Volver arriba" -->
+    <button id="back-to-top-button" class="back-to-top-button" aria-label="Volver al inicio de la página">
+        <i class="fas fa-arrow-up text-lg"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const normalHeader = document.getElementById('normal-header');
+            const stickyHeader = document.getElementById('sticky-header');
+            const mainContentPusher = document.getElementById('main-content-pusher');
+            const whatsappFloatButton = document.getElementById('whatsapp-float-button');
+            const backToTopButton = document.getElementById('back-to-top-button');
+            
+            let scrollThreshold = 10; // Un pequeño umbral para iniciar
+            
+            const setupLayout = () => {
+                const normalHeaderHeight = normalHeader.offsetHeight;
+                // Ajusta el padding-top del mainContentPusher para que el contenido no quede debajo del header
+                mainContentPusher.style.paddingTop = `${normalHeaderHeight}px`;
+                scrollThreshold = 10; // Reinicia el umbral
+            };
+
+            setupLayout();
+            window.addEventListener('resize', setupLayout);
+
+            let isStickyVisible = false;
+
+            const handleScroll = () => {
+                const currentScrollY = window.scrollY;
+
+                // Muestra el header fijo y oculta el normal
+                if (currentScrollY > scrollThreshold && !isStickyVisible) {
+                    isStickyVisible = true;
+                    stickyHeader.classList.remove('-translate-y-full', 'opacity-0');
+                    normalHeader.style.opacity = '0';
+                    normalHeader.style.pointerEvents = 'none'; // Deshabilita eventos de ratón en el header normal
+                    
+                    // Mostrar botones flotantes
+                    whatsappFloatButton.classList.add('visible');
+                    backToTopButton.classList.add('visible');
+
+                } 
+                // Muestra el header normal y oculta el fijo
+                else if (currentScrollY <= scrollThreshold && isStickyVisible) {
+                    isStickyVisible = false;
+                    stickyHeader.classList.add('-translate-y-full', 'opacity-0');
+                    normalHeader.style.opacity = '1';
+                    normalHeader.style.pointerEvents = 'auto'; // Habilita eventos de ratón en el header normal
+
+                    // Ocultar botones flotantes
+                    whatsappFloatButton.classList.remove('visible');
+                    backToTopButton.classList.remove('visible');
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+
+            // Comentario: La lógica de `active` para los enlaces de categoría en el header normal se ha eliminado
+            // ya que ahora los enlaces de navegación de categorías dirigen a secciones específicas.
+            // Si se desea una clase 'active' para la categoría actual, se necesitaría lógica adicional
+            // basada en la posición de scroll o la URL.
+
+            // JavaScript para los sliders
+            const setupSlider = (sliderId, autoPlay = false) => {
+                const sliderContainer = document.getElementById(sliderId);
+                if (!sliderContainer) return; // Salir si el slider no se encuentra
+
+                const slidesWrapper = sliderContainer.querySelector(':scope > div:first-child');
+                const slides = Array.from(slidesWrapper.children);
+                const totalSlides = slides.length;
+                let currentSlide = 0;
+
+                // Obtener elementos de navegación si existen
+                const prevButton = sliderContainer.querySelector(`#${sliderId}-prev`);
+                const nextButton = sliderContainer.querySelector(`#${sliderId}-next`);
+                const dots = sliderContainer.querySelectorAll(`.${sliderId}-dot`);
+
+                const showSlide = (index) => {
+                    if (index >= totalSlides) {
+                        currentSlide = 0;
+                    } else if (index < 0) {
+                        currentSlide = totalSlides - 1;
+                    } else {
+                        currentSlide = index;
+                    }
+                    // Ajusta el transform para el ancho total del wrapper de slides
+                    slidesWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+                    // Actualizar punto activo
+                    if (dots.length > 0) {
+                        dots.forEach((dot, i) => {
+                            if (i === currentSlide) {
+                                dot.classList.add('active');
+                                dot.style.opacity = '1';
+                            } else {
+                                dot.classList.remove('active');
+                                dot.style.opacity = '0.5';
+                            }
+                        });
+                    }
+                };
+
+                const nextSlide = () => {
+                    showSlide(currentSlide + 1);
+                };
+
+                const prevSlide = () => {
+                    showSlide(currentSlide - 1);
+                };
+
+                // Event Listeners para navegación
+                if (prevButton) {
+                    prevButton.addEventListener('click', prevSlide);
+                }
+                if (nextButton) {
+                    nextButton.addEventListener('click', nextSlide);
+                }
+
+                // Event Listeners para puntos
+                if (dots.length > 0) {
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', (e) => {
+                            showSlide(parseInt(e.target.dataset.slide));
+                        });
+                    });
+                }
+
+                // Funcionalidad de auto-reproducción
+                let autoPlayInterval;
+                if (autoPlay && totalSlides > 1) { // Solo auto-reproducir si hay más de una slide
+                    autoPlayInterval = setInterval(nextSlide, 5000); // Cambiar slide cada 5 segundos
+                    // Pausar al pasar el ratón por encima
+                    sliderContainer.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+                    sliderContainer.addEventListener('mouseleave', () => autoPlayInterval = setInterval(nextSlide, 5000));
+                }
+
+                // Mostrar la primera slide al inicio
+                showSlide(0);
+            };
+
+            // Llamar a setupSlider para cada banner
+            setupSlider('main-banner-slider', true); // Banner principal con auto-reproducción
+            setupSlider('side-banner-slider', false); // Banner lateral, sin auto-reproducción por ahora (solo una imagen)
+
+            // Funcionalidad del botón "Volver arriba"
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Desplazamiento suave
+                });
+            });
+
+            // Actualizar año en el footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Manejo de scroll para enlaces de navegación (Header y Footer)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        // Calculate offset for sticky header if it's visible
+                        // This ensures the section title is not hidden behind the sticky header
+                        let offset = 0;
+                        if (stickyHeader.classList.contains('opacity-1')) {
+                            offset = stickyHeader.offsetHeight;
+                        }
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - offset,
+                            behavior: 'smooth'
+                        });
+                    } else if (targetId === 'top') {
+                        // Special case for 'Inicio' link to scroll to the very top
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
