@@ -1,0 +1,676 @@
+/* Definición de variables CSS para la paleta de colores (basado en colors.png) */
+:root {
+    --color-dark-blue: #133C55;
+    --color-medium-blue: #3B6FA4;
+    --color-light-blue: #59A5D8;
+    --color-accent-blue: #84D2F6;
+    --color-lightest-blue: #91E5F6;
+    --color-white: #FFFFFF;
+    --color-gray-light: #F8F8F8;
+    --color-gray-medium: #E0E0E0;
+    --color-whatsapp-green: #25D366;
+    --color-whatsapp-green-hover: #1DA851;
+    --color-footer-bg: #133C55;
+    --color-footer-text: #E0E0E0;
+    --header-height: 0px; /* Variable CSS para la altura del header, actualizada por JS */
+}
+
+/* Estilos base y fuentes */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-gray-light);
+    color: var(--color-dark-blue);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    font-size: 1rem;
+}
+
+/* Ajustes generales para la legibilidad del texto */
+p, li, span, a, button, input::placeholder {
+    font-size: 1rem;
+}
+
+/* --- Estilos para el Header Normal (Visible por defecto) --- */
+#normal-header {
+    background-color: var(--color-dark-blue);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Estilo para los enlaces de navegación superior (Inicio, Conócenos, etc.) en el header normal */
+.header-top-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* Pequeño espacio entre icono y texto */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    color: var(--color-white);
+    transition: color 0.2s ease;
+}
+
+.header-top-nav-link i {
+    font-size: 0.75rem; /* text-xs */
+    color: inherit;
+}
+
+/* Estilo para los enlaces de categoría (Icono + Texto) en la barra de navegación del header normal */
+.icon-category-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.8rem 0.6rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    min-width: 100px;
+    flex-grow: 1;
+    max-width: 120px;
+    color: var(--color-white) !important;
+}
+
+.icon-category-link:hover,
+.icon-category-link.active {
+    transform: translateY(-2px);
+    background-color: var(--color-light-blue);
+}
+
+.icon-category-link i {
+    font-size: 2rem !important; /* Más pequeño que antes */
+    color: inherit;
+    margin-bottom: 0.3rem;
+}
+
+.icon-category-link span {
+    font-size: 0.9rem !important; /* Más pequeño que antes */
+    font-weight: 600;
+    color: inherit;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Asegurar que la navegación de categorías normal se envuelva correctamente */
+#category-nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+/* Estilos para el número de WhatsApp en el header normal */
+.whatsapp-header-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+}
+
+.whatsapp-header-subtitle {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-accent-blue);
+    line-height: 1;
+}
+
+.whatsapp-header-number {
+    background-color: var(--color-whatsapp-green);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.whatsapp-header-number:hover {
+    background-color: var(--color-whatsapp-green-hover);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+.whatsapp-header-number i {
+    font-size: 1.625rem;
+}
+.whatsapp-header-number span {
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* --- Estilos para el Header Fijo (Sticky) --- */
+#sticky-header {
+    background-color: var(--color-dark-blue); /* Fondo sólido como el header normal */
+    transform: translateY(-100%); /* Oculto por defecto */
+    opacity: 0;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el sticky header */
+}
+
+#sticky-header.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Fila superior del sticky header */
+#sticky-header > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+}
+
+/* Contenedor para navegación principal y WhatsApp en sticky header */
+/* Ajustado para que los elementos se alineen en fila en desktop y se centren en móvil */
+#sticky-header > div:first-child > div:last-child { 
+    display: flex;
+    flex-direction: row; /* Por defecto en fila para desktop */
+    align-items: center; /* Centra verticalmente */
+    gap: 1.5rem; /* Espacio entre nav y whatsapp en desktop */
+    flex-grow: 0; /* No crece por defecto */
+    flex-shrink: 0; /* No se encoge por defecto */
+}
+
+/* Navegación principal en el sticky header */
+#sticky-header > div:first-child > div:last-child > nav {
+    width: auto; /* Ancho automático */
+    display: flex;
+    justify-content: center; /* Centra los elementos de navegación */
+    align-items: center;
+}
+
+#sticky-header > div:first-child > div:last-child > nav ul {
+    display: flex;
+    gap: 1rem; /* Espacio entre los elementos de navegación */
+    justify-content: center; /* Asegura el centrado de los ítems */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+
+/* Estilos para los enlaces de navegación principal en el sticky header (Inicio, Conócenos, etc.) */
+.sticky-main-nav-link {
+    display: flex;
+    flex-direction: row; /* Icono a la izquierda, texto a la derecha */
+    align-items: center; /* Centra el icono y el texto verticalmente */
+    gap: 0.25rem; /* Espacio entre icono y texto */
+    font-size: 0.7rem; /* Más pequeño */
+    font-weight: 500;
+    color: var(--color-white);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    text-align: center; /* Centra el texto */
+    padding: 0.2rem 0.4rem; /* Pequeño padding para el área de clic */
+    border-radius: 0.3rem;
+}
+
+.sticky-main-nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Ligero fondo al pasar el ratón */
+}
+
+.sticky-main-nav-link i {
+    font-size: 1rem; /* Icono más pequeño */
+    color: inherit;
+    margin-bottom: 0; /* Eliminar margen inferior si lo hubiera */
+}
+
+/* Estilos para el botón de WhatsApp en el sticky header */
+.whatsapp-header-number-sticky {
+    background-color: var(--color-whatsapp-green);
+    color: white;
+    padding: 0.3rem 0.6rem; /* Más compacto y representativo */
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    font-size: 0.8rem; /* Más pequeño */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 0; /* Eliminar margen superior para alineación en fila */
+    text-decoration: none; /* Asegura que no tenga subrayado */
+    animation: pulse 2s infinite; /* Animación de pulso */
+}
+.whatsapp-header-number-sticky:hover {
+    background-color: var(--color-whatsapp-green-hover);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.whatsapp-header-number-sticky i {
+    font-size: 0.9rem;
+}
+
+/* Keyframes para la animación de pulso */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+}
+
+
+/* Estilos para la versión compacta de categorías en el header fijo */
+.sticky-category-link {
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: flex;
+    flex-direction: row; /* Icono y texto en fila */
+    align-items: center;
+    text-align: left;
+    gap: 0.2rem; /* Espacio muy pequeño entre icono y texto */
+    flex-shrink: 0;
+    color: var(--color-white) !important;
+}
+.sticky-category-link:hover,
+.sticky-category-link.active {
+    background-color: var(--color-light-blue);
+}
+.sticky-category-link span {
+    font-size: 0.85rem !important; /* Texto más pequeño para sticky nav */
+    font-weight: 500;
+    color: inherit;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+.sticky-category-link i {
+    font-size: 1.2rem !important; /* Iconos más pequeños para sticky nav */
+    color: inherit;
+    margin-bottom: 0;
+}
+
+/* Para la navegación de categorías en el header fijo, alinear al centro */
+#sticky-category-nav-links {
+    justify-content: center; /* Centrar la nav bar */
+    gap: 0.5rem; /* Ajustar el espacio entre elementos */
+}
+
+/* Estilos para la barra de búsqueda en el sticky header */
+.sticky-search-container {
+    flex-grow: 1; /* Permite que la barra de búsqueda ocupe el espacio disponible */
+    max-width: 300px; /* Limita el ancho en pantallas grandes */
+}
+
+.sticky-search-container input {
+    font-size: 0.95rem; /* Tamaño de fuente para el input */
+    padding-left: 2.5rem; /* Espacio para el icono */
+    padding-right: 1rem;
+    padding-top: 0.5rem; /* Ajustar padding vertical */
+    padding-bottom: 0.5rem; /* Ajustar padding vertical */
+}
+.sticky-search-container i {
+    left: 0.75rem; /* Posición del icono de búsqueda */
+    font-size: 1rem; /* Tamaño del icono */
+}
+
+
+/* --- Corrección de colores para botones específicos --- */
+/* Botones de WhatsApp en secciones "Conócenos" y "Contáctanos" */
+#conocenos-section .inline-flex,
+#contactanos-section .inline-flex {
+    background-color: var(--color-whatsapp-green) !important;
+    color: var(--color-white) !important;
+}
+#conocenos-section .inline-flex:hover,
+#contactanos-section .inline-flex:hover {
+    background-color: var(--color-whatsapp-green-hover) !important;
+}
+
+/* Botón "Ver Catálogo Completo" en sección "Catálogo" */
+#catalogo-section .inline-flex {
+    background-color: var(--color-light-blue) !important;
+    color: var(--color-white) !important;
+}
+#catalogo-section .inline-flex:hover {
+    background-color: var(--color-medium-blue) !important;
+}
+
+/* Eliminados los estilos para los botones de navegación de los sliders */
+/* Eliminados los estilos para los puntos indicadores de los sliders */
+
+
+/* Estilos para el botón de WhatsApp flotante */
+.whatsapp-float-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-whatsapp-green);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateY(100px); /* Oculto por defecto */
+    opacity: 0;
+    text-decoration: none;
+    font-size: 1.125rem;
+}
+
+.whatsapp-float-button.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.whatsapp-float-button:hover {
+    background-color: var(--color-whatsapp-green-hover);
+    transform: translateY(-2px);
+}
+
+/* Estilos para el botón "Volver arriba" */
+.back-to-top-button {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background-color: var(--color-light-blue);
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateY(100px); /* Oculto por defecto */
+    opacity: 0;
+}
+
+.back-to-top-button.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.back-to-top-button:hover {
+    background-color: var(--color-medium-blue);
+    transform: translateY(-2px);
+}
+
+
+/* Estilos para los banners de categoría */
+.category-banner {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-color: var(--color-dark-blue);
+}
+
+.category-banner::before {
+    content: none;
+}
+
+.category-banner-content {
+    position: relative;
+    z-index: 10;
+    padding: 1.5rem;
+}
+
+.category-banner h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: var(--color-white);
+}
+
+.category-banner p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--color-white);
+}
+
+/* Estilos para las tarjetas de productos */
+.product-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-card-image {
+    width: 100%;
+    height: 150px;
+    background-color: var(--color-lightest-blue);
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark-blue);
+    font-size: 0.9rem;
+    font-weight: 600;
+    object-fit: cover;
+}
+
+.product-card-title {
+    font-weight: 600;
+    color: var(--color-dark-blue);
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+}
+
+.product-card-price {
+    font-weight: 700;
+    color: var(--color-medium-blue);
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.product-card-button {
+    background-color: var(--color-dark-blue);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.product-card-button:hover {
+    background-color: var(--color-medium-blue);
+}
+
+/* Responsive iframe for flipbook */
+.responsive-iframe-container {
+    position: relative;
+    padding-bottom: 75%; /* 4:3 aspect ratio (height / width * 100) */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Estilos para la galería de imágenes del producto */
+#product-gallery img {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+#product-gallery img.active-thumbnail {
+    border-color: var(--color-light-blue);
+}
+
+/* Estilos para las sugerencias de búsqueda */
+.search-suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.search-suggestions-list li {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+    color: var(--color-dark-blue);
+}
+
+.search-suggestions-list li:last-child {
+    border-bottom: none;
+}
+
+.search-suggestions-list li:hover {
+    background-color: var(--color-gray-light);
+}
+
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    /* Ajustes para el header normal en móvil */
+    #normal-header .container.px-6.h-16 { /* Barra principal */
+        height: auto;
+        flex-direction: column;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    #normal-header .whatsapp-header-group {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    #normal-header #main-search {
+        width: 100%;
+        font-size: 0.95rem;
+        padding-left: 2.5rem;
+    }
+    #normal-header #main-search + .fa-search { /* Icono de búsqueda */
+        left: 1.25rem;
+    }
+
+    /* Ajustes para los enlaces de categoría en el header normal en móvil */
+    .icon-category-link {
+        width: 90px;
+        padding: 0.5rem 0.25rem;
+    }
+    .icon-category-link i { font-size: 1.8rem !important; }
+    .icon-category-link span { font-size: 0.9rem !important; }
+
+    /* Ajustes para el header sticky en móvil */
+    #sticky-header .container.px-6.h-14 { /* Fila superior del sticky */
+        height: auto;
+        flex-direction: column;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    #sticky-header .sticky-search-container {
+        width: 100%;
+        margin: 0.5rem 0; /* Margen para separarlo del logo y WhatsApp */
+    }
+    #sticky-header > div:first-child > div:last-child { /* Contenedor de nav y whatsapp en sticky header */
+        flex-direction: column; /* Apilar en móvil */
+        gap: 0.5rem; /* Espacio entre nav y whatsapp en móvil */
+        width: 100%; /* Ocupa todo el ancho disponible */
+    }
+    #sticky-header .whatsapp-header-number-sticky {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    #sticky-header .container.px-6.h-12 { /* Fila inferior de categorías del sticky */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    #sticky-category-nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .sticky-category-link {
+        font-size: 0.8rem !important;
+        padding: 0.3rem 0.6rem;
+    }
+    .sticky-category-link i {
+        font-size: 1.1rem !important;
+    }
+    .sticky-category-link span {
+        font-size: 0.75rem !important;
+    }
+
+    /* Ajustes para las secciones de categorías en móvil */
+    .category-row {
+        flex-direction: column;
+    }
+    .category-banner {
+        width: 100%;
+        height: 250px;
+        margin-bottom: 1.5rem;
+    }
+    .category-banner h3 {
+        font-size: 1.75rem;
+    }
+    .category-banner p {
+        font-size: 0.95rem;
+    }
+    .category-products-grid {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .product-card-image {
+        height: 130px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .category-products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1025px) {
+    .category-products-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .product-card-image {
+        height: 180px;
+    }
+}

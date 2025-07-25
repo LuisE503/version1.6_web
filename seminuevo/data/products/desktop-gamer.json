@@ -1,0 +1,21 @@
+{
+    "id": "desktop-gamer",
+    "categoryId": "desktops",
+    "name": "Desktop Gamer Elite (Reacondicionada)",
+    "price": 999.00,
+    "description": "Sumérgete en tus juegos favoritos con este potente desktop gamer reacondicionado. Optimizado para un rendimiento fluido y gráficos impresionantes. ¡Listo para la acción!",
+    "images": [
+        "https://placehold.co/800x600/133C55/ffffff?text=Gamer+Principal",
+        "https://placehold.co/800x600/3B6FA4/ffffff?text=Gamer+Interior",
+        "https://placehold.co/800x600/84D2F6/133C55?text=Gamer+Puertos"
+    ],
+    "specifications": [
+        "Procesador: Intel Core i5 (9ª Gen)",
+        "Tarjeta Gráfica: NVIDIA GeForce GTX 1660 Super",
+        "RAM: 16GB DDR4",
+        "Almacenamiento: 256GB SSD + 1TB HDD",
+        "Sistema Operativo: Windows 10 Home",
+        "Condición: Reacondicionada (Grado A)"
+    ],
+    "whatsappMessage": "Hola! Me interesa el Desktop Gamer Elite (Reacondicionada) (ID: desktop-gamer). Me gustaría saber más detalles."
+}

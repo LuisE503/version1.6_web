@@ -1,0 +1,21 @@
+{
+    "id": "laptop-ultrabook",
+    "categoryId": "laptops",
+    "name": "Laptop Ultrabook X1 Carbon (Reacondicionada)",
+    "price": 799.00,
+    "description": "Experimenta la máxima portabilidad y rendimiento con esta ultrabook reacondicionada. Ideal para profesionales que necesitan potencia en movimiento. Diseño elegante y batería de larga duración.",
+    "images": [
+        "https://placehold.co/800x600/59A5D8/133C55?text=Ultrabook+Principal",
+        "https://placehold.co/800x600/3B6FA4/ffffff?text=Ultrabook+Lateral",
+        "https://placehold.co/800x600/84D2F6/133C55?text=Ultrabook+Teclado"
+    ],
+    "specifications": [
+        "Procesador: Intel Core i7 (8ª Gen)",
+        "RAM: 16GB DDR4",
+        "Almacenamiento: 512GB SSD NVMe",
+        "Pantalla: 14 pulgadas Full HD IPS",
+        "Sistema Operativo: Windows 10 Pro",
+        "Condición: Reacondicionada (Grado A)"
+    ],
+    "whatsappMessage": "Hola! Me interesa la Laptop Ultrabook X1 Carbon (Reacondicionada) (ID: laptop-ultrabook). Me gustaría saber más detalles."
+}

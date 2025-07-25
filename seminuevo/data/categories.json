@@ -1,0 +1,73 @@
+[
+    {
+        "id": "open-box",
+        "name": "Open Box",
+        "tagline": "Calidad Premium a Precios Insuperables",
+        "description": "Descubre equipos con la calidad de un producto nuevo y precios que te encantarán. Nuestros productos Open Box son inspeccionados y certificados para garantizar un rendimiento óptimo. ¡Perfectos para un gran ahorro en El Salvador sin comprometer la calidad!",
+        "icon": "fas fa-box-open",
+        "productIds": [
+            "laptop-open-box-a", "monitor-open-box-b", "desktop-open-box-c", "tablet-open-box-d",
+            "open-box-e", "open-box-f", "open-box-g", "open-box-h"
+        ]
+    },
+    {
+        "id": "laptops",
+        "name": "Laptops",
+        "tagline": "Potencia y Portabilidad para tu Día a Día",
+        "description": "Encuentra la laptop perfecta para tu productividad, estudios o entretenimiento. Ofrecemos laptops seminuevas de alto rendimiento, ideales para profesionales y estudiantes en El Salvador que buscan calidad y eficiencia a un precio justo.",
+        "icon": "fas fa-laptop",
+        "productIds": [
+            "laptop-ultrabook", "laptop-gaming-pro", "laptop-empresarial", "laptop-economica",
+            "laptop-business-pro", "laptop-student-lite", "laptop-convertible", "laptop-chromebook",
+            "laptop-performance", "laptop-ultralight"
+        ]
+    },
+    {
+        "id": "desktops",
+        "name": "Desktops",
+        "tagline": "La Potencia Fija que tu Espacio Necesita",
+        "description": "Para tu oficina, estudio o centro de entretenimiento en casa, nuestros desktops reacondicionados ofrecen la potencia y estabilidad que buscas. Explora opciones para gaming, diseño o trabajo pesado, con la garantía de Computecpart en El Salvador.",
+        "icon": "fa-solid fa-hard-drive",
+        "productIds": [
+            "desktop-gamer", "pc-oficina", "workstation-pro", "mini-pc",
+            "desktop-all-in-one", "desktop-home-theater", "desktop-developer", "desktop-entry-level",
+            "desktop-compact", "desktop-silent", "desktop-server", "desktop-graphics-pro",
+            "desktop-multimedia", "desktop-budget", "desktop-high-end", "desktop-basic"
+        ]
+    },
+    {
+        "id": "monitores",
+        "name": "Monitores",
+        "tagline": "Visualiza tu Mundo con la Mejor Calidad",
+        "description": "Complementa tu equipo con nuestros monitores seminuevos y reacondicionados. Desde pantallas para trabajo diario hasta monitores gaming de alta tasa de refresco, encuentra la claridad y el color que necesitas en El Salvador.",
+        "icon": "fas fa-tv",
+        "productIds": [
+            "monitor-curvo-27", "monitor-gaming-144hz", "monitor-oficina-24", "monitor-4k-32",
+            "monitor-ultrawide", "monitor-touchscreen", "monitor-portable", "monitor-design",
+            "monitor-budget", "monitor-professional"
+        ]
+    },
+    {
+        "id": "puntos-de-venta",
+        "name": "Puntos de Venta",
+        "tagline": "Soluciones Robustas para tu Negocio",
+        "description": "Optimiza las operaciones de tu comercio con nuestros sistemas de punto de venta. Ofrecemos terminales, impresoras y lectores de código de barras reacondicionados, ideales para cualquier tipo de negocio en El Salvador. ¡Eficiencia y durabilidad garantizadas!",
+        "icon": "fas fa-cash-register",
+        "productIds": [
+            "terminal-pos", "impresora-termica", "lector-codigo-barras", "cajon-dinero",
+            "pos-tablet", "pos-all-in-one", "pos-scanner", "pos-printer-wifi"
+        ]
+    },
+    {
+        "id": "equipos-completos",
+        "name": "Equipos Completos",
+        "tagline": "Soluciones Plug and Play para tu Comodidad",
+        "description": "Simplifica tu vida con nuestros paquetes de equipos completos. Listos para usar, estos bundles incluyen todo lo necesario para empezar a trabajar o disfrutar desde el primer momento. ¡La solución ideal para hogares y oficinas en El Salvador!",
+        "icon": "fa-solid fa-computer",
+        "productIds": [
+            "kit-pc-monitor", "laptop-accesorios", "desktop-perifericos", "punto-venta-completo",
+            "home-office-bundle", "gaming-starter-kit", "student-pack", "creative-bundle",
+            "business-starter-pack", "family-pc-bundle", "compact-office-kit"
+        ]
+    }
+]
